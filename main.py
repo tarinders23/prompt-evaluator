@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from app.constants import INITIAL_PROMPT, SAMPLE_RESPONSE
+from src.constants import INITIAL_PROMPT, SAMPLE_RESPONSE
 
 
 # Load environment variables from .env file
@@ -20,7 +20,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="src/templates")
 
 # Although not used in this version, it's good practice to mount a static directory
 # app.mount("/static", StaticFiles(directory="static"), name="static")
