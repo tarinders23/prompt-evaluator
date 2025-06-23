@@ -1,0 +1,20 @@
+[project]
+name = "prompt-evaluator"
+version = "0.1.0"
+description = "Evaluate prompt for given exercise"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  { name = "Tarinder Singh", email = "tarinders23@gmail.com" },
+]
+keywords = ["fastapi", "generative-ai"]
+license = "MIT"
+dependencies = [
+    "fastapi==0.115.13",
+    "uvicorn[standard]==0.34.3",
+    "jinja2==3.1.6",
+    "python-dotenv==1.1.0",
+    "google-generativeai==0.8.5",
+    "python-multipart==0.0.20",
+    "markdown==3.8.2"
+]

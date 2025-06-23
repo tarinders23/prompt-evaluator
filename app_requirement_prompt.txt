@@ -1,0 +1,61 @@
+Please create a web-based interactive application using python fastapi, jinja2 templates, and Tailwind CSS to teach prompt engineering concepts to software developers. The application should be structured as follows:
+
+Overall Structure:
+
+A main App component that serves as the entry point.
+The layout should be clean, modern, responsive, and visually appealing, using Tailwind CSS for all styling.
+Use the 'Inter' font throughout the application.
+Ensure all elements have rounded corners.
+The application should be fully responsive for mobile, tablet, and desktop views.
+Core Functionality (Initial Version):
+
+Navigation/Sidebar (Placeholder): A simple sidebar or top navigation (can be expanded later) to indicate different modules or exercises. For this initial version, we will focus on a single exercise page.
+
+Exercise Display Area:
+
+A section to display the current prompt engineering lesson or exercise description. This will be static text for now, explaining a concept (e.g., "Introduction to Zero-Shot Prompting").
+Include a clear objective for the user.
+
+1. User Input Area:
+A multiline text input (textarea) where users can type their prompts.
+A "Submit" button to trigger the LLM call (currently a placeholder).
+A "Clear" button to clear the input.
+
+2. Prompt Evaluation Area:
+A section to display the evaluation of input prompt (User Input Area). To evaluate prompt the app ask the LLM to evalate the effectivness of prompt based on the exercise question
+For this initial version, it can be static text, e.g., "Great start!" or "Consider adding more context."
+
+3. LLM Response Display Area:
+A section to display the actual LLM's response to the user's prompt.
+The actual LLM integration (using gemini-2.0-flash) will be outlined below.
+Add a loading indicator that shows when an LLM call is in progress.
+
+
+Specific Exercise (Example: Zero-Shot Prompting):
+
+Lesson Text:
+
+## Exercise 1: Introduction to Zero-Shot Prompting
+
+**Objective:** Understand how to get a direct answer from an LLM without providing examples.
+
+Zero-shot prompting involves asking the LLM to perform a task directly, relying solely on its pre-trained knowledge. It's the simplest form of prompting.
+
+**Task:** Write a prompt that asks the LLM to summarize the key benefits of cloud computing in a single paragraph. Focus on clarity and conciseness.
+User Input Placeholder: "Enter your prompt here..."
+
+LLM Call Logic:
+
+When the "Submit" button is clicked, make a fetch call to the gemini-2.0-flash model.
+The prompt for the LLM will be the text entered by the user in the textarea.
+Display the LLM's response in the dedicated area.
+Include error handling for the API call (e.g., displaying "Error fetching response" if the call fails).
+The apiKey should be an empty string, as it will be provided by the environment.
+Technical Requirements:
+
+All styling must be done using Tailwind CSS classes.
+No external images are needed for this initial setup; use colors and basic shapes if required.
+Include comprehensive comments throughout the code.
+
+Question Bank and Extercises:
+Store the questions as markdown file, under the exercise name folder

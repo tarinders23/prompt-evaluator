@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+    <!-- Exercise Display Area -->
+    <div class="bg-slate-800 p-6 rounded-lg mb-6 prose prose-invert max-w-none">
+        {{ exercise_html|safe }}
+    </div>
+
+    <!-- User Input Area -->
+    <form id="prompt-form" class="space-y-4">
+        <div>
+            <label for="user-prompt" class="block text-sm font-medium text-slate-400 mb-2">Your Prompt</label>
+            <textarea id="user-prompt" name="prompt" rows="5" class="w-full p-4 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-200" placeholder="Enter your prompt here..."></textarea>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button type="submit" id="submit-btn" class="px-6 py-2 bg-sky-600 text-white font-semibold rounded-lg hover:bg-sky-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-sky-500">
+                Evaluate Prompt
+            </button>
+            <button type="button" id="clear-btn" class="px-6 py-2 bg-slate-600 text-white font-semibold rounded-lg hover:bg-slate-700 transition duration-200">
+                Clear
+            </button>
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="hidden flex items-center space-x-2">
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Generating...</span>
+            </div>
+        </div>
+    </form>
+
+    <!-- This section is a placeholder as per requirements -->
+    <!-- Prompt Evaluation Area -->
+    <div id="evaluation-area" class="mt-6 bg-slate-800 p-6 rounded-lg hidden">
+        <h3 class="text-lg font-semibold text-white mb-2">Prompt Evaluation</h3>
+        <p id="evaluation-text" class="text-slate-400">Consider adding more context for a better response.</p>
+    </div>
+
+
+    <!-- LLM Response Display Area -->
+    <div id="response-area" class="mt-6 bg-slate-800 p-6 rounded-lg hidden">
+        <h3 class="text-lg font-semibold text-white mb-2">LLM Response</h3>
+        <div id="llm-response" class="prose prose-invert max-w-none"></div>
+    </div>
+
+</div>
+
+<script>
+    // Get DOM elements
+    const form = document.getElementById('prompt-form');
+    const userInput = document.getElementById('user-prompt');
+    const submitBtn = document.getElementById('submit-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const responseArea = document.getElementById('response-area');
+    const llmResponse = document.getElementById('llm-response');
+    const evaluationArea = document.getElementById('evaluation-area'); // Placeholder
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        const promptText = userInput.value.trim();
+
+        if (!promptText) {
+            alert('Please enter a prompt.');
+            return;
+        }
+
+        // Show loading indicator and disable submit button
+        loadingIndicator.classList.remove('hidden');
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        // Hide previous responses or errors
+        responseArea.classList.add('hidden');
+        evaluationArea.classList.add('hidden');
+
+        try {
+            // Make API call to the FastAPI backend
+            const response = await fetch('/api/prompt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt: promptText }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'An unknown error occurred.');
+            }
+
+            // The response is HTML content. We get it as text.
+            const htmlContent = await response.text();
+
+            llmResponse.innerHTML = htmlContent;
+            responseArea.classList.remove('hidden');
+        } catch (error) {
+            // Display error message
+            llmResponse.textContent = `Error: ${error.message}`;
+            responseArea.classList.remove('hidden');
+            evaluationArea.classList.add('hidden');
+        } finally {
+            // Hide loading indicator and re-enable submit button
+            loadingIndicator.classList.add('hidden');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    });
+
+    // Handle clear button click
+    clearBtn.addEventListener('click', () => {
+        userInput.value = '';
+        responseArea.classList.add('hidden');
+        evaluationArea.classList.add('hidden');
+        llmResponse.textContent = '';
+        userInput.focus();
+    });
+</script>
+{% endblock %}

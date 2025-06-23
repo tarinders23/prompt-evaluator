@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Playground</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font globally */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-300">
+    <div class="flex min-h-screen">
+        <!-- Sidebar (Placeholder) -->
+        <aside class="w-64 bg-slate-800 p-6 hidden md:block rounded-r-lg">
+            <h1 class="text-white text-2xl font-bold mb-8">PromptLearn</h1>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#" class="block py-2 px-4 rounded-lg bg-sky-500 text-white font-semibold">Zero-Shot Prompting</a>
+                    </li>
+                    <!-- More navigation items can be added here -->
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 md:p-10">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
