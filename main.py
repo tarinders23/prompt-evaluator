@@ -103,7 +103,10 @@ async def get_llm_response(prompt_request: PromptRequest):
         # For development, we return a sample response. In production, you would use the line below.
         print(prompt_request.prompt)
         response = chat.send_message(tutor_prompt)
-        response_html = markdown.markdown(str(response.text))
+        response_html = str(response.text)
+        response_html = response_html[response_html.find('<'): response_html.rfind('>')+1]
+        print(response_html)
+
         # return response_html
         return HTMLResponse(content=response_html,
                             media_type="text/html",

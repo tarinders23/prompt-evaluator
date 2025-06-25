@@ -95,8 +95,11 @@
             // The response is HTML content. We get it as text.
             const htmlContent = await response.text();
 
-            llmResponse.innerHTML = htmlContent;
-            responseArea.classList.remove('hidden');
+            // Open the HTML content in a new tab
+            const newTab = window.open();
+            newTab.document.open();
+            newTab.document.write(htmlContent);
+            newTab.document.close();
         } catch (error) {
             // Display error message
             llmResponse.textContent = `Error: ${error.message}`;

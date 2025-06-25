@@ -30,7 +30,11 @@ Consider yourself a prompt engineering tutor. Your task is to assess and analyze
    - Calculate an overall score based on the average of the individual criteria scores.
 
 **Output:**
+- Return the output opnly and only HTML.
+- HTML outputs should resonate with contemporary design trends while ensuring functionality and accessibility and attractiveness
 - Summarize the evaluation results, including individual scores, overall score, and feedback for the user to enhance their prompt.
+- Include a barchart for evaluation results on the top
+
 """
 
 
